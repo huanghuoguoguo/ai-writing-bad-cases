@@ -8,7 +8,7 @@
 
 换句话说，这里有几层东西：
 
-- 理论：解释什么叫 AI 味，它为什么会出现。
+- 理论：只保留最小诊断框架。
 - data：程序可直接读取的 bad case JSON 库。
 - docs：由 JSON 渲染出来、给人阅读的 Markdown 文档。
 - rules / skills：把观察变成可执行约束。
@@ -33,7 +33,6 @@
 
 ## 目录
 
-- `theory/what-makes-text-sound-ai.md`
 - `theory/diagnostic-dimensions.md`
 - `data/cases/manifest.json`
 - `data/cases/zh/argumentative.json`
@@ -64,6 +63,7 @@
 - 同一个表达，如果在不同文体里表现不同，可以分开记。
 - 机器可执行数据优先维护在 `data/`，Markdown 文档用于补充解释。
 - 可读 Markdown 由 `render_cases_md.py` 从 JSON 生成，不再手工维护 `cases/` 目录。
+- `theory/` 只保留最小分析框架，不再重复 `rules/` 里的执行建议。
 - 最终目标不是“看出 AI”，而是“让文本更像作者自己写的”。
 
 ## 下一步

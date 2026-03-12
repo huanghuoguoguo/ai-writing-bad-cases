@@ -1,6 +1,8 @@
 # 中文负面规则
 
-这份文件面向 prompt、skill 和 system message。目标不是把文本写得更花，而是尽量压低常见的 AI 痕迹。
+这份文件面向 prompt、skill 和 system message。
+
+这里只写可执行限制，不重复解释这些问题为什么像 AI。对应的分析框架统一看 `theory/diagnostic-dimensions.md`。
 
 ## 直接禁用
 
