@@ -1,0 +1,24 @@
+{
+  "version": "0.1.0",
+  "description": "Machine-readable bad case source library",
+  "files": [
+    {
+      "path": "data/cases/zh/argumentative.json",
+      "lang": "zh",
+      "genre": "argumentative",
+      "record_count": 10
+    },
+    {
+      "path": "data/cases/zh/narrative.json",
+      "lang": "zh",
+      "genre": "narrative",
+      "record_count": 0
+    },
+    {
+      "path": "data/cases/zh/academic.json",
+      "lang": "zh",
+      "genre": "academic",
+      "record_count": 0
+    }
+  ]
+}
