@@ -328,6 +328,522 @@
       ],
       "rewrite_hint": "如果结论已经自然出现，就不要额外打总结标签。",
       "prompt_rule": "Use explicit summary markers sparingly. Do not rely on them to create structure."
+    },
+    {
+      "id": "zh.arg.era_opening",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "在这个……的时代",
+      "aliases": [
+        "随着……的发展",
+        "废话式开场"
+      ],
+      "severity": 0.85,
+      "diagnostic_dimensions": [
+        "average_style",
+        "abstract_over_specific"
+      ],
+      "description": "用空泛时代背景开场，不提供任何具体信息，是最典型的AI废话式开头。",
+      "why_it_sounds_ai": "AI喜欢用宏大叙事开场来假装有上下文，但这种开场几乎不包含任何有效信息。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "在这个.{2,16}的时代",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "随着.{2,16}的(发展|进步|普及)",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "当今社会",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "在当下这个",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "在这个信息爆炸的时代，我们每天都面临着大量的选择。"
+      ],
+      "counter_examples": [
+        "去年我换了三份工作之后，开始认真想这个问题。"
+      ],
+      "rewrite_hint": "直接进入你要说的具体话题，不要用宏大背景铺垫。",
+      "prompt_rule": "Never open with era/society platitudes. Start with your specific subject."
+    },
+    {
+      "id": "zh.arg.meta_essence",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "本质上 / 底层逻辑",
+      "aliases": [
+        "本质",
+        "底层逻辑",
+        "核心在于"
+      ],
+      "severity": 0.78,
+      "diagnostic_dimensions": [
+        "meta_discourse_density",
+        "abstract_over_specific"
+      ],
+      "description": "频繁使用'本质上''底层逻辑'等词，声称在揭示深层真相，实际上只是在给普通观点加包装。",
+      "why_it_sounds_ai": "AI喜欢用这类词来让普通判断显得深刻，但真正的洞察不需要反复声明自己是'本质'。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "本质上",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "底层逻辑",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "核心(在于|就是)",
+          "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "说白了",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "学习的底层逻辑，本质上是认知的迭代。"
+      ],
+      "counter_examples": [
+        "反复练习之后我发现，记住的东西会自动帮你连接新知识。"
+      ],
+      "rewrite_hint": "把'本质上'后面的内容直接写成具体判断，不要用元话语标签。",
+      "prompt_rule": "Avoid 'essentially' and 'underlying logic' labels. Make specific claims directly."
+    },
+    {
+      "id": "zh.arg.forced_sublimation",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "强行升华",
+      "aliases": [
+        "段尾拔高",
+        "意义拔高"
+      ],
+      "severity": 0.87,
+      "diagnostic_dimensions": [
+        "posture_before_content",
+        "closure_impulse"
+      ],
+      "description": "在段落结尾把具体问题突然拔高到人生、成长、意义层面。",
+      "why_it_sounds_ai": "AI习惯在每段结尾加一句升华来制造完整感，但这种拔高经常和前文具体讨论脱节。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "这(不仅仅|不只)是.{2,16}(更是|而是).{2,16}(人生|成长|生命|意义|境界)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "说到底.{0,16}(人生|生命|成长)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "最终.{0,12}(回到|指向).{0,12}(自己|内心|生命)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "这不仅仅是一个效率问题，更是一种人生态度的选择。"
+      ],
+      "counter_examples": [
+        "所以这件事的影响范围比我最初想的要大，但也有明确的边界。"
+      ],
+      "rewrite_hint": "如果前文没有铺垫到那个高度，结尾就不要跳到人生层面。让结论的大小和论据的大小匹配。",
+      "prompt_rule": "Do not elevate to life/growth/meaning at paragraph end unless the evidence truly supports it."
+    },
+    {
+      "id": "zh.arg.three_part_default",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "默认三段式",
+      "aliases": [
+        "第一第二第三",
+        "三点结构"
+      ],
+      "severity": 0.75,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "average_style"
+      ],
+      "description": "默认把论述拆成三点，用显式编号推进，无论内容是否真的有三个维度。",
+      "why_it_sounds_ai": "AI倾向于把任何问题都切成三点来回答，因为三段式是最安全的结构模板。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "第一.{2,60}第二.{2,60}第三",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "首先.{2,60}其次.{2,60}(最后|再次)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(从|可以从).{0,8}(三个|3个)(方面|角度|维度|层面)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "我们可以从三个方面来理解这个问题：首先，效率；其次，协作；最后，反馈。"
+      ],
+      "counter_examples": [
+        "这件事情里最重要的一点，就是你是否真的在乎结果。其他的其实都可以慢慢调整。"
+      ],
+      "rewrite_hint": "不要默认三点。问问自己是不是真的有三个独立维度，还是硬凑的。",
+      "prompt_rule": "Do not default to three-point structure. Use the number of points your content actually needs."
+    },
+    {
+      "id": "zh.arg.colon_expansion",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "冒号式展开结论",
+      "aliases": [
+        "冒号强展开"
+      ],
+      "severity": 0.72,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "meta_discourse_density"
+      ],
+      "description": "用冒号加一个抽象判断来展开结论，像在执行一个'宣布结论'的动作。",
+      "why_it_sounds_ai": "AI喜欢用冒号把结论框起来，制造一种'重点来了'的感觉，但真正的论证不需要这种舞台灯光。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(答案|关键|核心|真相|秘诀|本质)(是|很简单|只有一个)：",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "(原因|逻辑|道理)(很简单|其实很简单)：",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "答案很简单：认知决定上限。"
+      ],
+      "counter_examples": [
+        "我后来发现问题出在我一直在优化流程，但从没问过流程本身是否需要存在。"
+      ],
+      "rewrite_hint": "去掉冒号前面的声明词，直接把判断写成自然句子。",
+      "prompt_rule": "Avoid 'The answer is:' / 'The key is:' preambles. State your conclusion naturally."
+    },
+    {
+      "id": "zh.arg.full_coverage",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "全覆盖式论述",
+      "aliases": [
+        "面面俱到",
+        "各方面展开"
+      ],
+      "severity": 0.73,
+      "diagnostic_dimensions": [
+        "average_style",
+        "posture_before_content"
+      ],
+      "description": "试图覆盖一个话题的所有方面，每个方面浅尝辄止，没有明显偏心。",
+      "why_it_sounds_ai": "AI追求'全面'和'完整'，但真人写作通常有明确的偏好和取舍。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "无论是.{2,20}还是.{2,20}(都|亦)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(不仅|既).{2,20}(而且|也|还|又).{2,20}(同时|更)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "从.{1,8}到.{1,8}(再到|乃至)",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "无论是个人成长，还是团队协作，抑或是组织管理，都需要这种思维。"
+      ],
+      "counter_examples": [
+        "这个方法在小团队里特别好用，大公司我没试过，不敢乱说。"
+      ],
+      "rewrite_hint": "选一个最值得展开的角度深入说，不要把所有方面都点到。",
+      "prompt_rule": "Do not try to cover all angles. Choose one and go deep."
+    },
+    {
+      "id": "zh.arg.progressive_template",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "递进式模板",
+      "aliases": [
+        "不仅而且更",
+        "层层递进"
+      ],
+      "severity": 0.79,
+      "diagnostic_dimensions": [
+        "structure_symmetry",
+        "posture_before_content"
+      ],
+      "description": "用'不仅……而且……更……'的递进模板来堆叠观点，看似层层深入，实际只是形式递进。",
+      "why_it_sounds_ai": "AI用递进结构来模拟思维的深入，但如果每一层都是抽象判断，递进只是假的。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "不仅.{2,30}(而且|更).{2,30}(甚至|更是)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "不只是.{2,20}更是.{2,20}(甚至|乃至)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "这不仅是一个工具，而且是一种方法论，更是一种思维方式。"
+      ],
+      "counter_examples": [
+        "这个工具帮我省了大概两小时。后来我发现它还能做数据清洗，这是我没想到的。"
+      ],
+      "rewrite_hint": "每一层递进都应该有新的具体信息，不要只用更抽象的词来假装深入。",
+      "prompt_rule": "Each escalation step must add concrete new information, not just a more abstract label."
+    },
+    {
+      "id": "zh.arg.paraphrase_meta",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "换句话说 / 也就是说",
+      "aliases": [
+        "也就是说",
+        "简单来说"
+      ],
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "meta_discourse_density",
+        "over_explicitness"
+      ],
+      "description": "频繁用'换句话说''也就是说'来重新解释刚说过的内容，像在不断给自己当翻译。",
+      "why_it_sounds_ai": "AI的输出经常通过重述来填充字数和制造完整感，但重述并不推进论证。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "换句话说",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "也就是说",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "简单来说",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "通俗地说",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "效率不等于速度。换句话说，你做得快不代表你做得对。"
+      ],
+      "counter_examples": [
+        "效率不等于速度——做完十件事但只有两件有用，不如做完三件件件到位。"
+      ],
+      "rewrite_hint": "如果第一遍没说清楚，改写第一遍；如果说清楚了，就不要重述。",
+      "prompt_rule": "Avoid paraphrase markers. If the first statement was unclear, rewrite it; if it was clear, move on."
+    },
+    {
+      "id": "zh.arg.truly_important",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "真正重要的是",
+      "aliases": [
+        "真正的关键",
+        "真正的价值"
+      ],
+      "severity": 0.81,
+      "diagnostic_dimensions": [
+        "closure_impulse",
+        "posture_before_content"
+      ],
+      "description": "用'真正重要的是'来声明自己即将说出核心洞察，但后面跟的经常只是一个普通判断。",
+      "why_it_sounds_ai": "这个词组像一个自带聚光灯的标签，AI用它来假装下一句话特别重要。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "真正(重要|关键|有价值)的(是|在于)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "最(重要|关键)的(一点|一件事)(是|在于)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "真正重要的是，你是否有持续学习的意愿。"
+      ],
+      "counter_examples": [
+        "比起方法，我更在意你是不是每天都在练。"
+      ],
+      "rewrite_hint": "去掉'真正重要的是'，直接写你认为重要的那个具体判断。",
+      "prompt_rule": "Do not use 'what truly matters is'. Just state the judgment directly."
+    },
+    {
+      "id": "zh.arg.dash_supplement",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "破折号式补充",
+      "aliases": [
+        "破折号解释",
+        "——补充句"
+      ],
+      "severity": 0.65,
+      "diagnostic_dimensions": [
+        "meta_discourse_density",
+        "average_style"
+      ],
+      "description": "高频使用破折号来插入补充说明，制造一种'顺便解释一下'的节奏。",
+      "why_it_sounds_ai": "AI经常用破折号来塞入额外信息，看起来像在展示周到，实际上是在堆砌。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "——.{4,40}——",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "——(也就是|即|换言之|简单说)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "这种方法——也就是所谓的迭代式开发——在很多场景下都适用。"
+      ],
+      "counter_examples": [
+        "迭代式开发在很多场景下都适用。"
+      ],
+      "rewrite_hint": "如果补充信息重要就写进主句，不重要就删掉，不要用破折号两头一夹。",
+      "prompt_rule": "Avoid paired dashes for supplementary information. Integrate or remove."
+    },
+    {
+      "id": "zh.arg.abstract_quote",
+      "lang": "zh",
+      "genres": [
+        "argumentative"
+      ],
+      "label": "双引号框抽象概念",
+      "aliases": [
+        "引号概念",
+        "概念加引号"
+      ],
+      "severity": 0.67,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "average_style"
+      ],
+      "description": "把抽象概念放进双引号里强调，像在给词语加特效。",
+      "why_it_sounds_ai": "AI喜欢用引号来把普通词语升级成'概念'，但这只是形式上的强调，没有增加信息。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[\u201c\"].{1,8}(思维|能力|逻辑|认知|意识|价值|格局)[\u201d\"]",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "所谓的?[\u201c\"].{2,12}[\u201d\"]",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "我们需要的是一种\u201c底层思维\u201d，而不是表面的技巧。"
+      ],
+      "counter_examples": [
+        "与其研究方法论，不如先把手头这件事做完再说。"
+      ],
+      "rewrite_hint": "去掉引号，直接用这个词。如果去掉引号这句话显得空洞，说明问题不是引号，是词本身太抽象。",
+      "prompt_rule": "Do not put abstract concepts in quotes for emphasis. Use concrete description instead."
+    },
+    {
+      "id": "zh.arg.connector_chain",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "连接词链条",
+      "aliases": [
+        "此外再者",
+        "逻辑连接词堆砌"
+      ],
+      "severity": 0.71,
+      "diagnostic_dimensions": [
+        "connector_driven",
+        "over_explicitness"
+      ],
+      "description": "段落推进主要靠'此外''再者''另外''与此同时'等连接词，而不是内容本身的逻辑关系。",
+      "why_it_sounds_ai": "AI用连接词来模拟逻辑推进，但如果去掉连接词段落就散架了，说明逻辑是假的。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(此外|再者|另外|与此同时).{4,60}(此外|再者|另外|与此同时|而且|同时)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(首先|第一).{4,80}(此外|另外|与此同时)",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "此外，我们还需要注意沟通。与此同时，团队协作也很重要。另外，反馈机制同样不可忽视。"
+      ],
+      "counter_examples": [
+        "沟通和协作的关系比我想象的紧密——没有好的沟通，协作基本是空谈。"
+      ],
+      "rewrite_hint": "去掉连接词，看看段落还能不能自然地推进。如果不能，说明需要重组内容顺序，而不是加更多连接词。",
+      "prompt_rule": "Remove connector words and check if the paragraph still flows. If not, restructure the content."
     }
   ]
 }

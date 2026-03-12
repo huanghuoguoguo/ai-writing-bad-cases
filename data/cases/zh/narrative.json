@@ -2,5 +2,401 @@
   "version": "0.1.0",
   "lang": "zh",
   "genre": "narrative",
-  "records": []
+  "records": [
+    {
+      "id": "zh.nar.emotion_freeze",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "时间凝固式描写",
+      "severity": 0.88,
+      "diagnostic_dimensions": [
+        "emotional_servicing",
+        "average_style"
+      ],
+      "description": "用'时间仿佛停止了''那一刻世界安静了'来制造情感高潮，是最典型的AI叙事模板。",
+      "why_it_sounds_ai": "AI用时间冻结来跳过真正的情感描写，因为它不知道具体的身体感受和环境细节。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "时间(仿佛|好像|似乎)(凝固|停止|静止)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "那一刻.{0,8}(世界|周围|一切)(仿佛|好像)?(安静|静止|停下)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "世界(仿佛|好像)(只剩下|只有)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "那一刻，时间仿佛凝固了，周围的一切都安静了下来。"
+      ],
+      "counter_examples": [
+        "他说完那句话之后我愣了大概五秒，手里的杯子已经凉了。"
+      ],
+      "rewrite_hint": "用具体的身体感受、环境细节来写那个瞬间，不要用'时间停止'来代替描写。",
+      "prompt_rule": "Never freeze time for emotional effect. Describe the specific physical and sensory experience."
+    },
+    {
+      "id": "zh.nar.eye_description",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "眼神描写套路",
+      "severity": 0.82,
+      "diagnostic_dimensions": [
+        "average_style",
+        "emotional_servicing"
+      ],
+      "description": "用'眼里闪烁着光芒''眼神里满是温柔'这类模板来代替具体的人物描写。",
+      "why_it_sounds_ai": "AI对人物外貌描写的想象力有限，几乎总是落在眼神上，而且用词高度重复。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "眼(里|中|神)(闪烁|闪着|透着|满是|充满|泛着)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "目光.{0,8}(温柔|坚定|深邃|明亮|清澈)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "眼眶.{0,4}(泛红|湿润|微微红)",
+          "weight": 0.75
+        }
+      ],
+      "examples": [
+        "她的眼里闪烁着光芒，目光温柔而坚定。"
+      ],
+      "counter_examples": [
+        "她一直盯着窗外，手指在桌面上来回划。"
+      ],
+      "rewrite_hint": "不要只写眼神。描写动作、姿态、习惯、环境，让读者自己感受这个人的状态。",
+      "prompt_rule": "Avoid eye-description cliches. Show character through actions, posture, and environment."
+    },
+    {
+      "id": "zh.nar.inner_monologue_template",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "心理活动模板",
+      "severity": 0.84,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "emotional_servicing"
+      ],
+      "description": "用'他心里想着''她不禁想到''内心深处'来标记心理活动，而不是让思绪自然流出。",
+      "why_it_sounds_ai": "AI需要显式标签来区分叙述层，但好的叙事可以让心理活动和行动自然交织。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(他|她|我)(心里|不禁|忍不住)(想着|想到|觉得)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "内心深处.{0,8}(知道|明白|清楚|涌起)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "脑海(中|里)(浮现|闪过|回荡)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "她心里想着，也许这就是命运安排好的。内心深处，她知道自己无法逃避。"
+      ],
+      "counter_examples": [
+        "也许是命运安排好的吧。她站起来，把门关上了。"
+      ],
+      "rewrite_hint": "减少心理活动的显式标签，让人物的想法通过行动和对话自然流露。",
+      "prompt_rule": "Show thoughts through action and dialogue, not through explicit 'he/she thought' markers."
+    },
+    {
+      "id": "zh.nar.warm_light",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "温暖光线描写",
+      "severity": 0.79,
+      "diagnostic_dimensions": [
+        "average_style",
+        "emotional_servicing"
+      ],
+      "description": "用'阳光洒在''暖黄色的灯光''金色的光芒'来铺设温馨氛围。",
+      "why_it_sounds_ai": "AI写温馨场景几乎必用光线描写，因为这是最简单的氛围捷径。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "阳光(洒在|透过|照在|穿过)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(暖黄|昏黄|柔和)的(灯光|光线|光芒)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "金色的(阳光|光芒|光线)(洒|照|落)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "阳光透过窗帘洒在她的脸上，暖黄色的光芒让整个房间都温柔了起来。"
+      ],
+      "counter_examples": [
+        "厨房灯坏了一个月了，她摸黑切菜，切到手才想起来这事。"
+      ],
+      "rewrite_hint": "用一个和光线无关的具体细节来建立场景氛围。",
+      "prompt_rule": "Avoid warm-light atmospheric cliches. Use unexpected sensory details."
+    },
+    {
+      "id": "zh.nar.lip_corner_smile",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "嘴角微微上扬",
+      "severity": 0.83,
+      "diagnostic_dimensions": [
+        "average_style",
+        "emotional_servicing"
+      ],
+      "description": "用'嘴角微微上扬''嘴角勾起一抹弧度'来写微笑，是AI叙事里最高频的表情描写。",
+      "why_it_sounds_ai": "AI对面部表情的描写词库很窄，几乎总是落在嘴角上，而且表达高度雷同。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "嘴角.{0,4}(微微|轻轻|缓缓)?(上扬|上翘|勾起|扬起|挂着)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "嘴角.{0,6}(一抹|一丝)(弧度|笑意|微笑)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "唇角.{0,4}(微微|轻轻)?(上扬|勾起)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "他嘴角微微上扬，露出一抹不易察觉的微笑。"
+      ],
+      "counter_examples": [
+        "他没笑，但看起来不那么烦了。"
+      ],
+      "rewrite_hint": "用整体动作或语境来暗示情绪，不要把镜头对准嘴角。",
+      "prompt_rule": "Avoid lip-corner smile cliches. Show emotion through whole-body action or context."
+    },
+    {
+      "id": "zh.nar.emotion_flood",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "情绪词堆叠",
+      "severity": 0.8,
+      "diagnostic_dimensions": [
+        "emotional_servicing",
+        "posture_before_content"
+      ],
+      "description": "在一句话里堆叠多个情绪形容词，像在用力确保读者感受到情绪。",
+      "why_it_sounds_ai": "AI不信任自己的叙事能传达情绪，所以用堆叠形容词来补偿。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(感到|充满|涌起).{0,4}(温暖|幸福|感动|感激|欣慰).{0,8}(温暖|幸福|感动|感激|欣慰|满足)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(酸涩|苦涩|心酸).{0,8}(温暖|柔软|甜蜜)",
+          "weight": 0.85
+        },
+        {
+          "type": "phrase",
+          "pattern": "百感交集",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "她感到一阵温暖和感动涌上心头，眼眶不禁微微泛红，内心充满了感激和幸福。"
+      ],
+      "counter_examples": [
+        "她低头擦了擦眼睛，说了句谢谢，声音不太稳。"
+      ],
+      "rewrite_hint": "用一个具体的动作或反应来传达情绪，不要堆情绪词。",
+      "prompt_rule": "One emotion word per sentence maximum. Let actions convey feeling."
+    },
+    {
+      "id": "zh.nar.suddenly_realize",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "突然意识到",
+      "severity": 0.76,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "closure_impulse"
+      ],
+      "description": "用'突然意识到''恍然大悟''才明白'来制造人物顿悟的时刻。",
+      "why_it_sounds_ai": "AI喜欢给人物安排清晰的顿悟时刻，但真实的认知变化通常是模糊、渐进的。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(突然|忽然)(意识到|明白了|想通了|懂了)",
+          "weight": 0.85
+        },
+        {
+          "type": "phrase",
+          "pattern": "恍然大悟",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(这一刻|那一刻).{0,8}(才|终于)(明白|理解|懂得)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "那一刻她突然意识到，原来真正重要的不是结果，而是过程。"
+      ],
+      "counter_examples": [
+        "大概过了半年她才慢慢觉得，当时的选择可能没那么差。"
+      ],
+      "rewrite_hint": "让认知变化通过时间和事件的积累自然展现，不要安排一个明确的顿悟时刻。",
+      "prompt_rule": "Avoid sudden-realization moments. Show gradual understanding through events."
+    },
+    {
+      "id": "zh.nar.wind_blow",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "微风吹过式过渡",
+      "severity": 0.71,
+      "diagnostic_dimensions": [
+        "average_style",
+        "abstract_over_specific"
+      ],
+      "description": "用'微风吹过''风轻轻拂过'来做场景过渡或情绪铺垫。",
+      "why_it_sounds_ai": "风是AI最爱的环境元素，因为它不需要具体场景知识就能写。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(微风|清风|晚风|凉风)(吹过|拂过|吹来|掠过)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "风(轻轻|缓缓)(吹|拂)(过|来|着)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "一阵风(吹|拂)过",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "微风轻轻吹过，带来远处花的香气，她的心情也跟着舒展开来。"
+      ],
+      "counter_examples": [
+        "外面在修路，灰呛得她把窗户关了。"
+      ],
+      "rewrite_hint": "用具体的、意想不到的环境细节来做过渡，不要用风。",
+      "prompt_rule": "Avoid wind-as-transition cliches. Use specific, unexpected environmental details."
+    },
+    {
+      "id": "zh.nar.growth_ending",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "成长式结尾",
+      "severity": 0.86,
+      "diagnostic_dimensions": [
+        "closure_impulse",
+        "posture_before_content"
+      ],
+      "description": "在结尾安排一个明确的成长声明，像'她终于学会了''他变得更加坚强'。",
+      "why_it_sounds_ai": "AI需要给每个故事一个清晰的成长结论，但真实叙事经常以暧昧或未完成的状态结束。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(终于|从此)(学会了|明白了|懂得了|变得)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(变得|变成了).{0,8}(更加|更)(坚强|成熟|勇敢|从容)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(带着|怀着).{0,8}(希望|勇气|信心).{0,8}(继续|走向|迈向|踏上)",
+          "weight": 0.95
+        }
+      ],
+      "examples": [
+        "她终于学会了放下，带着希望和勇气，踏上了新的旅程。"
+      ],
+      "counter_examples": [
+        "后来的事情她没再跟我提过。我也没问。"
+      ],
+      "rewrite_hint": "结尾不必总结人物的成长。可以停在一个具体的动作或场景上。",
+      "prompt_rule": "Do not wrap up with explicit growth statements. End on a concrete image or action."
+    },
+    {
+      "id": "zh.nar.dialogue_emotion_tag",
+      "lang": "zh",
+      "genres": [
+        "narrative"
+      ],
+      "label": "对话情绪标签",
+      "severity": 0.74,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "average_style"
+      ],
+      "description": "在对话后面加'他温柔地说''她坚定地回答'这类显式情绪标签。",
+      "why_it_sounds_ai": "AI不相信对话内容本身能传达情绪，所以每句话后面都要加情绪说明书。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[，。！？\u201d](他|她)(温柔|坚定|平静|认真|郑重|轻声|柔声)地(说|回答|问|道)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "[，。！？\u201d](他|她)的(语气|声音)(变得|充满了?)(温柔|坚定|严肃|低沉)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "\u201c没关系。\u201d她温柔地说，语气充满了理解和包容。"
+      ],
+      "counter_examples": [
+        "\u201c没关系。\u201d她把水杯推过来。"
+      ],
+      "rewrite_hint": "去掉情绪副词，用一个具体的伴随动作来替代。",
+      "prompt_rule": "Replace emotional adverbs in dialogue tags with physical actions."
+    }
+  ]
 }

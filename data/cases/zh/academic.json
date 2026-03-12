@@ -2,5 +2,321 @@
   "version": "0.1.0",
   "lang": "zh",
   "genre": "academic",
-  "records": []
+  "records": [
+    {
+      "id": "zh.acd.empty_significance",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "空洞意义声明",
+      "severity": 0.84,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "posture_before_content"
+      ],
+      "description": "用'具有重要意义''具有深远影响'来声明研究价值，但不说明具体什么意义、影响什么。",
+      "why_it_sounds_ai": "AI写学术文本时很喜欢用这类空泛的价值声明来填充引言和结论。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "具有.{0,4}(重要|重大|深远|深刻|积极).{0,4}(意义|影响|价值|作用)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "(对|为).{2,20}(提供了|奠定了).{0,8}(基础|参考|借鉴)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "有着.{0,4}(重要|不可忽视|不可替代)的.{0,6}(意义|价值|作用)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "本研究对推动该领域的发展具有重要的理论意义和实践价值。"
+      ],
+      "counter_examples": [
+        "这篇论文验证了在小样本条件下，方法A比方法B的F1分数高12个百分点。"
+      ],
+      "rewrite_hint": "写清楚具体有什么意义：解决了什么问题，改进了多少，对谁有用。",
+      "prompt_rule": "Replace 'has important significance' with specific, measurable contributions."
+    },
+    {
+      "id": "zh.acd.vague_hedging",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "模糊论据",
+      "severity": 0.78,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "average_style"
+      ],
+      "description": "用'研究表明''有学者认为''大量研究'来引用证据，但不给出具体来源。",
+      "why_it_sounds_ai": "AI没有真实的文献记忆，所以倾向于用模糊引用来假装有证据支撑。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(研究|实践|经验)(表明|证明|显示|指出)",
+          "weight": 0.7
+        },
+        {
+          "type": "regex",
+          "pattern": "(有|许多|大量|众多)(学者|研究者|专家)(认为|指出|发现)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(相关|已有|现有)(研究|文献)(表明|显示|指出)",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "大量研究表明，这种方法在实践中具有较高的有效性。"
+      ],
+      "counter_examples": [
+        "Zhang et al. (2023) 在1200名被试中发现，该方法的有效率为73%。"
+      ],
+      "rewrite_hint": "给出具体的研究来源、数据或作者。如果没有，就诚实地说'据我所知'或去掉这句。",
+      "prompt_rule": "Cite specific sources with author and year. If you cannot, do not pretend evidence exists."
+    },
+    {
+      "id": "zh.acd.academic_meta_discourse",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "学术元话语过密",
+      "severity": 0.76,
+      "diagnostic_dimensions": [
+        "meta_discourse_density",
+        "over_explicitness"
+      ],
+      "description": "频繁使用'本文将从''下面将分析''本节主要讨论'等结构预告，像在给读者写导航说明书。",
+      "why_it_sounds_ai": "AI需要显式的结构标记来组织长文本，但过多的元话语会让论文像一份计划书而不是论文本身。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "本(文|章|节|部分)(将|主要|旨在)(从|分析|讨论|探讨|研究)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "下面(将|我们将)(分析|讨论|探讨|介绍)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(接下来|在此基础上).{0,8}(进一步|深入)(分析|探讨|讨论)",
+          "weight": 0.75
+        }
+      ],
+      "examples": [
+        "本节将从三个方面对这一问题进行深入分析和探讨。"
+      ],
+      "counter_examples": [
+        "样本按年龄分为三组。各组的差异如下。"
+      ],
+      "rewrite_hint": "直接开始分析，减少'本文将要做什么'的预告。读者能从内容本身看出结构。",
+      "prompt_rule": "Minimize structural announcements. Start the analysis directly."
+    },
+    {
+      "id": "zh.acd.template_conclusion",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "模板化结论",
+      "severity": 0.82,
+      "diagnostic_dimensions": [
+        "closure_impulse",
+        "average_style"
+      ],
+      "description": "用固定模板写结论：先总结，再说局限，最后说未来展望，每个环节都是套话。",
+      "why_it_sounds_ai": "AI的学术结论几乎都是同一个模板，缺少对具体研究结果的反思。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(但|然而).{0,16}(仍然|仍|还)(存在|有).{0,12}(不足|局限|限制)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "未来(的)?(研究|工作)(可以|应该|需要)(进一步|从|在)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "(期待|希望|相信).{0,12}(未来|今后|后续).{0,12}(研究|工作|探索)",
+          "weight": 0.85
+        }
+      ],
+      "examples": [
+        "本研究仍存在一定的局限性。未来的研究可以进一步扩大样本量，以提高结论的普适性。"
+      ],
+      "counter_examples": [
+        "这个结果可能跟我们只采了北方的数据有关，南方是否一样还不清楚。"
+      ],
+      "rewrite_hint": "把局限性和未来方向写得具体：具体哪里不足，具体为什么，具体下一步要做什么。",
+      "prompt_rule": "Write specific limitations tied to your actual data and methods, not template phrases."
+    },
+    {
+      "id": "zh.acd.topic_sentence_pattern",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "段首主题句模板",
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "over_explicitness",
+        "connector_driven"
+      ],
+      "description": "每段都用'关于X''就X而言''在X方面'开头，像在执行一个打标签的任务。",
+      "why_it_sounds_ai": "AI需要显式的主题标记来保持段落对齐，但过度使用让每段开头都像目录条目。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "^(关于|就|在|对于).{2,16}(而言|方面|来说|来看|角度)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "^(从|就).{2,12}(角度|层面|维度)(来看|来说|而言)",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "关于研究方法方面，本文采用了定量与定性相结合的方式。"
+      ],
+      "counter_examples": [
+        "我们用问卷收集了数据，然后跑了一个回归分析。"
+      ],
+      "rewrite_hint": "直接写这段要说的内容，不要在开头先打一个主题标签。",
+      "prompt_rule": "Start paragraphs with content, not topic labels."
+    },
+    {
+      "id": "zh.acd.passive_pile",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "被动语态堆砌",
+      "severity": 0.68,
+      "diagnostic_dimensions": [
+        "average_style",
+        "meta_discourse_density"
+      ],
+      "description": "过度使用'被认为是''被广泛应用''受到了关注'等被动结构。",
+      "why_it_sounds_ai": "AI倾向于用被动语态来显得客观，但中文的被动结构密度过高会显得不自然。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "被(认为|视为|看作|称为)(是|为)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "被广泛(应用|使用|采用|关注|讨论)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "(受到|得到)了?.{0,8}(广泛|普遍|高度|充分)的?(关注|重视|认可|应用)",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "该方法被广泛应用于多个领域，受到了学术界的高度关注。"
+      ],
+      "counter_examples": [
+        "很多团队用了这个方法，有几个发了论文。"
+      ],
+      "rewrite_hint": "把被动句改成主动句，说清楚谁做了什么。",
+      "prompt_rule": "Convert passive constructions to active voice. Name the agents."
+    },
+    {
+      "id": "zh.acd.abstract_scaffolding",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "引言脚手架",
+      "severity": 0.8,
+      "diagnostic_dimensions": [
+        "connector_driven",
+        "over_explicitness"
+      ],
+      "description": "引言用'近年来……然而……因此，本文……'的三步模板，像填空题。",
+      "why_it_sounds_ai": "AI的引言几乎总是这个三段式：背景、gap、本文目的，格式高度统一。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "近年来.{4,60}(然而|但是|但).{4,60}(因此|为此|基于此).{0,16}(本文|本研究)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "近年来.{4,40}(引起|受到|成为).{0,12}(关注|热点|焦点)",
+          "weight": 0.75
+        }
+      ],
+      "examples": [
+        "近年来，随着人工智能技术的快速发展，该领域引起了广泛关注。然而，现有研究仍存在不足。因此，本文旨在填补这一研究空白。"
+      ],
+      "counter_examples": [
+        "GPT-4发布后，关于LLM对齐的讨论突然变多了。但大多数论文只看输出质量，没人认真测过用户在什么时候选择不用它。"
+      ],
+      "rewrite_hint": "引言可以有背景-问题-目的的逻辑，但不要用固定句式。用具体的事实和数据来推进。",
+      "prompt_rule": "Avoid the boilerplate 'Recently...However...Therefore, this paper...' introduction formula."
+    },
+    {
+      "id": "zh.acd.filler_transition",
+      "lang": "zh",
+      "genres": [
+        "academic"
+      ],
+      "label": "学术填充过渡",
+      "severity": 0.66,
+      "diagnostic_dimensions": [
+        "connector_driven",
+        "meta_discourse_density"
+      ],
+      "description": "用'值得注意的是''需要指出的是''不可否认的是'这类空转句来做过渡。",
+      "why_it_sounds_ai": "AI用这类过渡句来争取思考时间和制造段落间的连接感，但它们不推进任何论证。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(值得|需要)(注意|指出|强调)的是",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "不可否认的是",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "(毋庸置疑|不言而喻)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(显而易见|毫无疑问)",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "值得注意的是，这一现象并非孤立存在。不可否认的是，它与多种因素密切相关。"
+      ],
+      "counter_examples": [
+        "这个现象和供应链成本的关系比和技术能力的关系更大。"
+      ],
+      "rewrite_hint": "去掉这类过渡句，直接说你要说的内容。如果内容足够有力，不需要提前声明它'值得注意'。",
+      "prompt_rule": "Remove 'it is worth noting' and similar filler transitions. State the point directly."
+    }
+  ]
 }
