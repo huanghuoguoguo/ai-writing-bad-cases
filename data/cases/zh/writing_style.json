@@ -1,0 +1,333 @@
+{
+  "version": "0.1.0",
+  "lang": "zh",
+  "genre": "writing_style",
+  "records": [
+    {
+      "id": "zh.wst.first_second_third",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic",
+        "narrative"
+      ],
+      "label": "程式化序列词",
+      "aliases": [
+        "首先其次最后",
+        "第一第二第三",
+        " firstly secondly"
+      ],
+      "severity": 0.75,
+      "diagnostic_dimensions": [
+        "structure_symmetry",
+        "template_expression"
+      ],
+      "description": "AI特别喜欢使用'首先、其次、然后、最后'等机械化的过渡词来组织内容结构，源自学术写作和说明文模板。",
+      "why_it_sounds_ai": "人类写作很少如此整齐地使用序列词，AI为了逻辑清晰而过度依赖这种套路化表达。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "首先.{0,50}其次.{0,50}最后",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "首先[，、]",
+          "weight": 0.6
+        },
+        {
+          "type": "phrase",
+          "pattern": "第一，",
+          "weight": 0.4
+        }
+      ],
+      "examples": [
+        "首先，我们需要理解问题的本质；其次，分析可能的原因；最后，提出解决方案。"
+      ],
+      "counter_examples": [
+        "想解决这个问题，得先看清本质。原因挺多，最核心的是..."
+      ],
+      "rewrite_hint": "删除明显的排比式衔接词，用更自然的过渡方式表达逻辑关系，如'先说说'、'另外还有'、'最后一点'等口语化表达。",
+      "prompt_rule": "减少'首先/其次/最后'等明显的序号词，用更自然的过渡词替换公式化的转折词。"
+    },
+    {
+      "id": "zh.wst.therefore_thus",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "过度使用因此所以",
+      "aliases": [
+        "因此",
+        "综上所述",
+        "总而言之"
+      ],
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "closure_impulse",
+        "template_expression"
+      ],
+      "description": "AI倾向于过度使用'因此'、'综上所述'等强逻辑连接词，形成模板化的结论句式。",
+      "why_it_sounds_ai": "人类口语中很少用'综上所述'，AI则把它当成标准结尾模板。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "因此[，、]",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "综上所述",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "总而言之",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "一言以蔽之",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "因此，我们可以得出结论...",
+        "综上所述，本文分析了..."
+      ],
+      "counter_examples": [
+        "所以我的判断是...",
+        "说白了就一句话..."
+      ],
+      "rewrite_hint": "用'所以'、'结果就是'、'我发现'等口语化表达替换'因此'；删除'综上所述'等总结陈词，直接给出结论。",
+      "prompt_rule": "用口语化的'所以'代替'因此'，删除'综上所述/总而言之'等模板化总结词。"
+    },
+    {
+      "id": "zh.wst.total_subtotal",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "总分总结构",
+      "aliases": [
+        "三明治结构",
+        "开头结尾重复"
+      ],
+      "severity": 0.65,
+      "diagnostic_dimensions": [
+        "structure_symmetry",
+        "closure_impulse"
+      ],
+      "description": "AI写作常采用'总-分-总'的标准议论文结构，开头提出观点，中间分点论述，结尾再总结一遍。",
+      "why_it_sounds_ai": "这是教科书式的标准结构，人类写作往往更随意，不会如此严格遵循。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(本文|这篇文章|本研究).{0,20}(旨在|探讨|分析|介绍)",
+          "weight": 0.5
+        },
+        {
+          "type": "regex",
+          "pattern": "(总的来说|总的来说).{0,10}(可以|得出|总结)",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "本文旨在探讨...综上所述，我们可以得出..."
+      ],
+      "counter_examples": [
+        "直接开始论述，没有开头声明和结尾总结"
+      ],
+      "rewrite_hint": "保留'分点论述'，去掉'总结'部分；开头直接切入话题，不要先声明'本文要谈什么'。",
+      "prompt_rule": "弱化总分总结构，删除开头'本文旨在...'和结尾'综上所述...'的套话。"
+    },
+    {
+      "id": "zh.wst.moreover_furthermore",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "递进连接词堆砌",
+      "aliases": [
+        "此外",
+        "另外",
+        "不仅如此"
+      ],
+      "severity": 0.6,
+      "diagnostic_dimensions": [
+        "template_expression"
+      ],
+      "description": "AI过度使用'此外'、'另外'等递进连接词来堆砌观点，形成机械化的段落衔接。",
+      "why_it_sounds_ai": "人类口语中很少说'此外'，更自然的说法是'还有'、'对了'。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "此外[，、]",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "另外[，、]",
+          "weight": 0.6
+        },
+        {
+          "type": "phrase",
+          "pattern": "不仅如此",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "A具有X特性。此外，它还能Y。此外，Z也是其优势。"
+      ],
+      "counter_examples": [
+        "A能X。对了，它还能Y。Z也挺有意思..."
+      ],
+      "rewrite_hint": "用'还有'、'对了'、'其实'等口语化词汇替换'此外'、'另外'。",
+      "prompt_rule": "用口语化的'还有'、'对了'代替'此外'、'另外'等书面化递进词。"
+    },
+    {
+      "id": "zh.wst.passive_voice",
+      "lang": "zh",
+      "genres": [
+        "academic",
+        "argumentative"
+      ],
+      "label": "过度使用被动语态",
+      "aliases": [
+        "被字句泛滥",
+        "无主语句子"
+      ],
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "posture_before_content"
+      ],
+      "description": "AI倾向于使用被动语态和无主语句子，让文本显得客观但缺乏人味。",
+      "why_it_sounds_ai": "被动语态是学术写作的标志，但过度使用会让文章读起来像翻译腔。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "被认为.{0,20}(是|具有|可以)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "被.{2,8}(用于|应用于|定义为)",
+          "weight": 0.7
+        },
+        {
+          "type": "regex",
+          "pattern": "^[^(我|你|我们|大家)].{0,10}(可以|能够).{0,10}(用于|实现|提供)",
+          "weight": 0.5
+        }
+      ],
+      "examples": [
+        "这种方法被认为是最优的。",
+        "可以被广泛应用于各种场景。"
+      ],
+      "counter_examples": [
+        "我觉得这方法最好用。",
+        "你能把它用在很多地方。"
+      ],
+      "rewrite_hint": "增加主语和主语表达形式，如'某某专家提出'、'我发现'；把被动句改为主动句。",
+      "prompt_rule": "增加明确的主语，把被动语态改为主动语态。"
+    },
+    {
+      "id": "zh.wst.meaningful_significant",
+      "lang": "zh",
+      "genres": [
+        "academic",
+        "argumentative"
+      ],
+      "label": "空洞价值声明",
+      "aliases": [
+        "具有重要意义",
+        "具有深远影响",
+        "不可或缺"
+      ],
+      "severity": 0.82,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "posture_before_content"
+      ],
+      "description": "用'具有重要意义''具有深远影响'来声明价值，但不说明具体什么意义、影响什么。",
+      "why_it_sounds_ai": "AI写学术文本时很喜欢用这类空泛的价值声明来填充引言和结论。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "具有.{0,4}(重要|重大|深远|深刻|积极).{0,4}(意义|影响|价值|作用)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "(对|为).{2,20}(提供了|奠定了).{0,8}(基础|参考|借鉴)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "有着.{0,4}(重要|不可忽视|不可替代)的.{0,6}(意义|价值|作用)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "本研究对推动该领域的发展具有重要的理论意义和实践价值。"
+      ],
+      "counter_examples": [
+        "这篇论文验证了在小样本条件下，方法A比方法B的F1分数高12个百分点。"
+      ],
+      "rewrite_hint": "写清楚具体有什么意义：解决了什么问题，改进了多少，对谁有用。",
+      "prompt_rule": "Replace 'has important significance' with specific, measurable contributions."
+    },
+    {
+      "id": "zh.wst.let_us_understand",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "让我们一起",
+      "aliases": [
+        "让我们",
+        "我们不妨",
+        "试想一下"
+      ],
+      "severity": 0.68,
+      "diagnostic_dimensions": [
+        "posture_before_content",
+        "emotional_servicing"
+      ],
+      "description": "用'让我们一起'、'我们不妨'等引导句式，试图营造共同探讨的氛围，但显得刻意。",
+      "why_it_sounds_ai": "这是演讲稿和营销文案的套路，书面文章中很少这样说话。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "让我们一起.{0,10}(看看|探讨|了解|分析)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "我们不妨.{0,10}(设想|思考|假设)",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "试想一下.{0,20}(如果|假如)",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "让我们一起探讨这个问题的本质。",
+        "我们不妨设想一下未来的场景。"
+      ],
+      "counter_examples": [
+        "来看看这个问题到底怎么回事。",
+        "假设过两年情况变了..."
+      ],
+      "rewrite_hint": "直接陈述观点，删掉'让我们一起'等引导语。",
+      "prompt_rule": "删除'让我们一起'、'我们不妨'等刻意的引导句式，直接说事。"
+    }
+  ]
+}
