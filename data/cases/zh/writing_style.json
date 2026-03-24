@@ -328,6 +328,110 @@
       ],
       "rewrite_hint": "直接陈述观点，删掉'让我们一起'等引导语。",
       "prompt_rule": "删除'让我们一起'、'我们不妨'等刻意的引导句式，直接说事。"
+    },
+    {
+      "id": "zh.wst.colloquial_filler",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic",
+        "narrative"
+      ],
+      "label": "伪口语化过渡词",
+      "aliases": [
+        "说白了",
+        "其实呢",
+        "讲道理",
+        "老实说"
+      ],
+      "severity": 0.65,
+      "diagnostic_dimensions": [
+        "template_expression",
+        "posture_before_content"
+      ],
+      "description": "AI生成文本时喜欢用'说白了'、'其实呢'等看似口语化的词汇作为过渡，但使用频率和语境往往不自然。",
+      "why_it_sounds_ai": "人类写作不会刻意用'说白了'来强调简单直白，这个词在AI文本中被过度使用，成为另一种模板化表达。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "说白了",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "说白了[，、]",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "其实呢[，、]",
+          "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "讲道理",
+          "weight": 0.6
+        }
+      ],
+      "examples": [
+        "说白了，这就是在归纳和演绎之间来回切换。",
+        "说白了，性能优化就是找瓶颈。"
+      ],
+      "counter_examples": [
+        "这就是归纳和演绎的切换。",
+        "性能优化其实就是找瓶颈。"
+      ],
+      "rewrite_hint": "直接陈述观点，不需要用'说白了'来强调。如果确实需要简化表达，可以用'其实就是'、'简单说'等更自然的说法，或者干脆直接说。",
+      "prompt_rule": "避免使用'说白了'等刻意口语化的过渡词，直接陈述观点即可。"
+    },
+    {
+      "id": "zh.wst.mixed_punctuation",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic",
+        "narrative"
+      ],
+      "label": "中英文标点混用",
+      "aliases": [
+        "中文引号",
+        "全角半角混用",
+        "标点不统一"
+      ],
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "format_consistency",
+        "writing_hygiene"
+      ],
+      "description": "AI生成文本时常出现中英文标点混用，如中文引号（""）与英文引号（""）混用，或中文逗号（，）与英文逗号（,）混用，导致格式不统一。",
+      "why_it_sounds_ai": "人类写作通常保持标点风格一致，而AI在生成过程中容易因为训练数据的混合而输出不统一的标点符号。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[\"\"].{0,100}[\"\"]",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "\"[^\"]*\"",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "[，。、；：？！]{0,10}[,\.\?!;:]",
+          "weight": 0.6
+        }
+      ],
+      "examples": [
+        ""发现规则，应用规则"描述的是...",
+        "说白了，这就是"归纳和演绎"的切换。"
+      ],
+      "counter_examples": [
+        ""发现规则，应用规则"描述的是...",
+        "说白了，这就是'归纳和演绎'的切换。"
+      ],
+      "rewrite_hint": "统一使用英文标点（半角）或中文标点（全角），不要混用。技术写作推荐统一使用英文半角标点。",
+      "prompt_rule": "统一使用英文半角标点符号，不要使用中文全角标点。"
     }
   ]
 }
