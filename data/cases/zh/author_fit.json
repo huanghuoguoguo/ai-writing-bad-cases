@@ -1,0 +1,157 @@
+{
+  "version": "0.1.0",
+  "lang": "zh",
+  "genre": "author_fit",
+  "records": [
+    {
+      "id": "zh.fit.wave_opening",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "浪潮式空开头",
+      "severity": 0.82,
+      "diagnostic_dimensions": ["posture_before_content", "abstract_over_specific"],
+      "description": "用‘在……浪潮中’‘随着……发展’这类宏大背景起手，没有真实问题或现场。",
+      "why_it_sounds_ai": "它先摆时代背景，再慢慢进入主题，像主题作文，不像作者平时从具体问题切入的写法。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "^(在.{0,12}(浪潮|背景|趋势)中|随着.{0,12}(发展|普及|演进))",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "在 AI Coding 的浪潮中，我们常常会遭遇代码生成的失控感。"
+      ],
+      "counter_examples": [
+        "那天晚上 CI 连续红了三次，我才意识到这套测试根本兜不住 AI 改代码。"
+      ],
+      "rewrite_hint": "不要先铺时代背景。直接写你遇到的那个问题、故障、实验或判断。",
+      "prompt_rule": "Open with a concrete problem, failure, or scene. Do not start with macro trend framing."
+    },
+    {
+      "id": "zh.fit.abstract_tool_promise",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "工具万能化承诺",
+      "severity": 0.86,
+      "diagnostic_dimensions": ["posture_before_content", "closure_impulse"],
+      "description": "把方法或工具写成‘缰绳’‘外壳’‘必由之路’这种万能解决方案。",
+      "why_it_sounds_ai": "AI 很爱给方法论上价值，把局部经验写成普遍答案。作者本人更适合写边界、代价和适用条件。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(那根缰绳|确定性的外壳|必由之路|万能钥匙|银弹)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "TDD 能否成为约束和加强 AI Coding 的那根缰绳呢？"
+      ],
+      "counter_examples": [
+        "至少在需求比较稳的时候，测试能帮 AI 少改歪几次。"
+      ],
+      "rewrite_hint": "把万能承诺改成有限判断，补上适用条件、代价和边界。",
+      "prompt_rule": "Avoid framing one method as the inevitable path or universal remedy. State scope and tradeoffs."
+    },
+    {
+      "id": "zh.fit.future_outlook_heading",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "模板化未来展望",
+      "severity": 0.78,
+      "diagnostic_dimensions": ["closure_impulse", "meta_discourse_density"],
+      "description": "单独起‘未来展望’一节，用标准模板收尾。",
+      "why_it_sounds_ai": "这是最常见的说明文模板动作。作者自己的博客更适合写‘还没想清楚的地方’，而不是一节空泛展望。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "未来展望",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "## 四、未来展望"
+      ],
+      "counter_examples": [
+        "## 还有两个地方我没想明白"
+      ],
+      "rewrite_hint": "把‘未来展望’改成具体未决问题、下一步实验，或者直接删掉这一节。",
+      "prompt_rule": "Do not add a generic future-outlook section. End with unresolved questions or specific next experiments."
+    },
+    {
+      "id": "zh.fit.abstract_future_hype",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "空泛前景拔高",
+      "severity": 0.8,
+      "diagnostic_dimensions": ["abstract_over_specific", "closure_impulse"],
+      "description": "用‘无尽的想象空间’‘爆发潜力不容小觑’这类说法抬高前景，但没有实际落点。",
+      "why_it_sounds_ai": "这种句子像行业观察模板，情绪比信息多，跟作者偏克制、讲证据的风格相反。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(无尽的想象空间|爆发潜力不容小觑|前景广阔|值得深入探讨)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "这项技术带来了无尽的想象空间，其爆发潜力不容小觑。"
+      ],
+      "counter_examples": [
+        "我现在只敢说它适合需求比较稳、测试比较全的模块。"
+      ],
+      "rewrite_hint": "删掉前景口号，改成当前观察到的限制、收益，或者你下一步真要做的实验。",
+      "prompt_rule": "Avoid hype phrases about broad future potential. Replace them with present evidence or concrete next steps."
+    },
+    {
+      "id": "zh.fit.tao_shu_pairing",
+      "lang": "zh",
+      "genres": ["argumentative"],
+      "label": "术与道对举",
+      "severity": 0.84,
+      "diagnostic_dimensions": ["structure_symmetry", "posture_before_content"],
+      "description": "用‘术/道’这种抽象对举把工程问题拔高成方法论姿态。",
+      "why_it_sounds_ai": "这类句子一看就像在写结尾金句，架势很大，但离具体工程实践很远。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[“\"]术[”\"].{0,20}[“\"]道[”\"]",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "我们不仅要掌握利用 AI 快速生成代码的‘术’，更要坚守工程质量的‘道’。"
+      ],
+      "counter_examples": [
+        "工具会变，测试和边界不会自己长出来。"
+      ],
+      "rewrite_hint": "别上升到‘术’和‘道’。直接写工程上真正该守住的约束。",
+      "prompt_rule": "Avoid abstract ‘术/道’ pairings. State the concrete engineering constraint directly."
+    },
+    {
+      "id": "zh.fit.over_smooth_closure",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "过分顺滑的结尾收束",
+      "severity": 0.77,
+      "diagnostic_dimensions": ["closure_impulse", "average_style"],
+      "description": "结尾用‘从混沌走向有序’‘让一切变得可靠’这类顺滑口号收束。",
+      "why_it_sounds_ai": "模型很爱把文章收成一句漂亮的大结论，但作者自己的好文章更像留个问号，或者停在一个具体判断上。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(从混沌走向有序|让代码的生成从.+走向.+|让一切变得可靠)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "让代码的生成从混沌走向有序。"
+      ],
+      "counter_examples": [
+        "至少我现在不敢在没测试的模块里继续放任它乱改。"
+      ],
+      "rewrite_hint": "把结尾改成一个具体判断、限制条件，或者你还没验证完的地方。",
+      "prompt_rule": "Do not end with a polished slogan. End with a concrete judgment, caveat, or unresolved question."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Machine-readable bad case source library",
   "files": [
     {
@@ -19,6 +19,12 @@
       "lang": "zh",
       "genre": "academic",
       "record_count": 8
+    },
+    {
+      "path": "data/cases/zh/author_fit.json",
+      "lang": "zh",
+      "genre": "author_fit",
+      "record_count": 6
     }
   ]
 }

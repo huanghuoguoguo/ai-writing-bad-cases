@@ -155,3 +155,17 @@
   - 综上所述，我们需要重新理解效率。
 - 改写提示：如果结论已经自然出现，就不要额外打总结标签。
 - Prompt 规则：Use explicit summary markers sparingly. Do not rely on them to create structure.
+
+### 过度收束因果：`原因很简单`
+
+- `id`: `zh.arg.over_simple_cause`
+- `severity`: `0.74`
+- `diagnostic_dimensions`: closure_impulse, abstract_over_specific
+- 描述：用“原因很简单”直接把复杂处境压成单一因果，容易显得像模板化讲解。
+- 为什么像 AI：AI 常用这类句子快速收束复杂背景，先摆姿态再展开内容，像在讲标准答案。
+- 匹配规则：
+- `phrase`: `原因很简单` (weight=1.0)
+- 示例：
+  - 原因很简单：前面的判断全都站不住。
+- 改写提示：直接写具体原因，或者先交代当时遇到的处境，不要用统一口吻压扁因果。
+- Prompt 规则：Avoid collapsing a situation with phrases like “原因很简单”. State the concrete reason or scene directly.

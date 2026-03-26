@@ -330,6 +330,38 @@
       "prompt_rule": "Use explicit summary markers sparingly. Do not rely on them to create structure."
     },
     {
+      "id": "zh.arg.over_simple_cause",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "narrative"
+      ],
+      "label": "原因很简单",
+      "aliases": [
+        "过度收束因果",
+        "一锤定音式因果句"
+      ],
+      "severity": 0.74,
+      "diagnostic_dimensions": [
+        "closure_impulse",
+        "abstract_over_specific"
+      ],
+      "description": "用“原因很简单”直接把复杂处境压成单一因果，容易显得像模板化讲解。",
+      "why_it_sounds_ai": "AI 常用这类句子快速收束复杂背景，先摆姿态再展开内容，像在讲标准答案。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "原因很简单",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "原因很简单：前面的判断全都站不住。"
+      ],
+      "rewrite_hint": "直接写具体原因，或者先交代当时遇到的处境，不要用统一口吻压扁因果。",
+      "prompt_rule": "Avoid collapsing a situation with phrases like “原因很简单”. State the concrete reason or scene directly."
+    },
+    {
       "id": "zh.arg.era_opening",
       "lang": "zh",
       "genres": [
@@ -389,15 +421,16 @@
       "aliases": [
         "本质",
         "底层逻辑",
-        "核心在于"
+        "核心在于",
+        "说穿了"
       ],
       "severity": 0.78,
       "diagnostic_dimensions": [
         "meta_discourse_density",
         "abstract_over_specific"
       ],
-      "description": "频繁使用'本质上''底层逻辑'等词，声称在揭示深层真相，实际上只是在给普通观点加包装。",
-      "why_it_sounds_ai": "AI喜欢用这类词来让普通判断显得深刻，但真正的洞察不需要反复声明自己是'本质'。",
+      "description": "频繁使用'本质上''底层逻辑''说白了''说穿了'等词，声称在揭示深层真相，实际上只是在给普通观点加包装。",
+      "why_it_sounds_ai": "AI喜欢用这类词来让普通判断显得深刻或显得像在把话挑明，但真正的洞察不需要反复声明自己在揭示'本质'。",
       "matchers": [
         {
           "type": "phrase",
@@ -418,6 +451,11 @@
           "type": "phrase",
           "pattern": "说白了",
           "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "说穿了",
+          "weight": 0.7
         }
       ],
       "examples": [
@@ -427,7 +465,7 @@
         "反复练习之后我发现，记住的东西会自动帮你连接新知识。"
       ],
       "rewrite_hint": "把'本质上'后面的内容直接写成具体判断，不要用元话语标签。",
-      "prompt_rule": "Avoid 'essentially' and 'underlying logic' labels. Make specific claims directly."
+      "prompt_rule": "Avoid labels like 'essentially', 'underlying logic', '说白了', and '说穿了'. Make specific claims directly."
     },
     {
       "id": "zh.arg.forced_sublimation",
@@ -787,17 +825,17 @@
       "matchers": [
         {
           "type": "regex",
-          "pattern": "[\u201c\"].{1,8}(思维|能力|逻辑|认知|意识|价值|格局)[\u201d\"]",
+          "pattern": "[“\"].{1,8}(思维|能力|逻辑|认知|意识|价值|格局)[”\"]",
           "weight": 0.85
         },
         {
           "type": "regex",
-          "pattern": "所谓的?[\u201c\"].{2,12}[\u201d\"]",
+          "pattern": "所谓的?[“\"].{2,12}[”\"]",
           "weight": 0.8
         }
       ],
       "examples": [
-        "我们需要的是一种\u201c底层思维\u201d，而不是表面的技巧。"
+        "我们需要的是一种“底层思维”，而不是表面的技巧。"
       ],
       "counter_examples": [
         "与其研究方法论，不如先把手头这件事做完再说。"
@@ -844,6 +882,314 @@
       ],
       "rewrite_hint": "去掉连接词，看看段落还能不能自然地推进。如果不能，说明需要重组内容顺序，而不是加更多连接词。",
       "prompt_rule": "Remove connector words and check if the paragraph still flows. If not, restructure the content."
+    },
+    {
+      "id": "zh.arg.codex_violent_slang",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "narrative",
+        "academic"
+      ],
+      "label": "暴力口癖类表达",
+      "aliases": [
+        "切",
+        "砍一刀",
+        "补一刀",
+        "狠狠干",
+        "拍脑门"
+      ],
+      "severity": 0.73,
+      "diagnostic_dimensions": [
+        "average_style",
+        "posture_before_content"
+      ],
+      "description": "高频使用带攻击感、动作感的口头表达来推进说明，像模型在用固定强度词制造气势。",
+      "why_it_sounds_ai": "这类词很像一套批量化中文口癖，强度先行，信息密度却不高，容易把正常分析写成带戾气的模板。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(^|[\\s，。！？；、（）“”‘’《》【】])切([\\s，。！？；、]|$)",
+          "weight": 0.45
+        },
+        {
+          "type": "regex",
+          "pattern": "(^|[\\s，。！？；、（）“”‘’《》【】])伤([\\s，。！？；、]|$)",
+          "weight": 0.4
+        },
+        {
+          "type": "phrase",
+          "pattern": "砍一刀",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "补一刀",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "更狠",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "狠一点",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "狠狠干",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "打坏",
+          "weight": 0.85
+        },
+        {
+          "type": "phrase",
+          "pattern": "拍板",
+          "weight": 0.6
+        },
+        {
+          "type": "phrase",
+          "pattern": "拍脑门",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "这段先砍一刀，不够的话再补一刀，直接狠狠干。"
+      ],
+      "counter_examples": [
+        "这段先删掉一半，再看证据够不够，不够就继续改。"
+      ],
+      "rewrite_hint": "把带攻击感的口头动作换成具体操作，不要靠气势词推进分析。",
+      "prompt_rule": "Avoid violent or combative slang like “砍一刀”“补一刀”“狠狠干”. Describe the concrete action instead."
+    },
+    {
+      "id": "zh.arg.codex_filler_slang",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "narrative",
+        "academic"
+      ],
+      "label": "废话连篇类口癖",
+      "aliases": [
+        "好，",
+        "行，",
+        "我先",
+        "一句话总结"
+      ],
+      "severity": 0.7,
+      "diagnostic_dimensions": [
+        "meta_discourse_density",
+        "over_explicitness"
+      ],
+      "description": "大量使用组织话术和过渡口头禅，像在实时播报自己的写作动作。",
+      "why_it_sounds_ai": "模型很爱先交代“我先怎么说”“简单地说”“一句话总结”，但这些组织动作通常不提供新信息。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(^|[。！？\\n])\\s*好，",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(^|[。！？\\n])\\s*行，",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(^|[。！？；\\n])\\s*我先([，。；： ]|$)",
+          "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "说穿",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "不踩坑",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "简单的说",
+          "weight": 0.9
+        },
+        {
+          "type": "regex",
+          "pattern": "不是\\s*而是",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "我先.{0,12}再",
+          "weight": 0.8
+        },
+        {
+          "type": "phrase",
+          "pattern": "一句话总结",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "好，我先说穿这件事：简单的说，不是效率问题，而是一句话总结不了的问题。"
+      ],
+      "counter_examples": [
+        "这件事的问题不在效率，而在你把两个阶段混到一起了。"
+      ],
+      "rewrite_hint": "删掉“我先说”“简单地说”“一句话总结”这类组织动作，直接写判断本身。",
+      "prompt_rule": "Avoid filler transitions like “好，”“我先”“简单的说”“一句话总结”."
+    },
+    {
+      "id": "zh.arg.codex_cheap_diagnosis",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "narrative",
+        "academic"
+      ],
+      "label": "廉价问诊类口癖",
+      "aliases": [
+        "痛点",
+        "根因",
+        "抠出来",
+        "我不猜"
+      ],
+      "severity": 0.68,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "posture_before_content"
+      ],
+      "description": "把分析写成问诊式诊断话术，反复谈“痛点”“根因”“抠出来”，语气像在做模板咨询。",
+      "why_it_sounds_ai": "这些词会把普通判断包装成一种“我在精准诊断你”的姿态，但常常没有对应的证据链。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "痛点",
+          "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "根因",
+          "weight": 0.85
+        },
+        {
+          "type": "phrase",
+          "pattern": "抠出来",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "揪出来",
+          "weight": 1.0
+        },
+        {
+          "type": "phrase",
+          "pattern": "我不猜",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "不靠猜",
+          "weight": 0.9
+        },
+        {
+          "type": "phrase",
+          "pattern": "不瞎猜",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "先别急着解释，我不猜，我们先把真正的根因和痛点抠出来。"
+      ],
+      "counter_examples": [
+        "先看日志和复现步骤，再判断问题到底出在哪一层。"
+      ],
+      "rewrite_hint": "少用问诊式姿态词，直接给出你掌握的证据、症状和判断边界。",
+      "prompt_rule": "Avoid diagnosis-coach phrasing like “痛点”“根因”“我不猜”. State evidence and limits directly."
+    },
+    {
+      "id": "zh.arg.codex_jargon_slang",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "narrative",
+        "academic"
+      ],
+      "label": "不说人话类黑话",
+      "aliases": [
+        "兜底",
+        "落盘",
+        "闭环",
+        "说人话就是"
+      ],
+      "severity": 0.72,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "average_style"
+      ],
+      "description": "用黑话和抽象操作词替代普通说明，像在复用一套高频咨询语汇。",
+      "why_it_sounds_ai": "模型很容易把“做完”“写入”“统一说法”改写成“闭环”“落盘”“口径”，看起来专业，实际更空。",
+      "matchers": [
+        {
+          "type": "phrase",
+          "pattern": "兜底",
+          "weight": 0.75
+        },
+        {
+          "type": "phrase",
+          "pattern": "落盘",
+          "weight": 0.95
+        },
+        {
+          "type": "phrase",
+          "pattern": "闭环",
+          "weight": 0.95
+        },
+        {
+          "type": "phrase",
+          "pattern": "说穿",
+          "weight": 0.7
+        },
+        {
+          "type": "phrase",
+          "pattern": "能吃",
+          "weight": 0.55
+        },
+        {
+          "type": "phrase",
+          "pattern": "这轮",
+          "weight": 0.55
+        },
+        {
+          "type": "phrase",
+          "pattern": "口径",
+          "weight": 0.75
+        },
+        {
+          "type": "phrase",
+          "pattern": "拆开",
+          "weight": 0.55
+        },
+        {
+          "type": "phrase",
+          "pattern": "说人话就是",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "这轮先把方案拆开，统一口径，最后再闭环落盘。"
+      ],
+      "counter_examples": [
+        "这次先把需求拆成三部分，统一命名，再把结果写进文档。"
+      ],
+      "rewrite_hint": "把黑话换成普通动作词，例如“收尾”“写入文档”“统一说法”“分开讲”。",
+      "prompt_rule": "Avoid vague jargon like “闭环”“落盘”“口径”“说人话就是”. Use plain, concrete wording."
     }
   ]
 }
