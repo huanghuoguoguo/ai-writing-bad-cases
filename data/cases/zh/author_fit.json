@@ -152,6 +152,58 @@
       ],
       "rewrite_hint": "把结尾改成一个具体判断、限制条件，或者你还没验证完的地方。",
       "prompt_rule": "Do not end with a polished slogan. End with a concrete judgment, caveat, or unresolved question."
+    },
+    {
+      "id": "zh.fit.conclusion_before_journey",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "先端判断再补来路",
+      "severity": 0.79,
+      "diagnostic_dimensions": ["posture_before_content", "average_style"],
+      "description": "先抛出一个整理过的抽象判断，再往回补解释和材料，像在组织一篇正确稿，不像判断从经历里慢慢长出来。",
+      "why_it_sounds_ai": "模型很爱先给出一个平稳正确的判断，再补理由把它撑住；这样虽然完整，但会少掉作者自己的卡点和来路。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(我更在意的是|我真正想解决的问题|这两件事我后来越分越开)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "我更在意的是它为什么一读就发空。",
+        "这两件事我后来越分越开。"
+      ],
+      "counter_examples": [
+        "那次我盯着屏幕改了快四十分钟，才慢慢意识到问题不在事实，而在语气。"
+      ],
+      "rewrite_hint": "先把你是怎么卡住的、为什么会在意、看到什么现象交代出来，再给判断。",
+      "prompt_rule": "Do not lead with a polished abstract judgment and backfill the evidence later. Let the judgment grow out of the writer's path."
+    },
+    {
+      "id": "zh.fit.editorial_neutrality",
+      "lang": "zh",
+      "genres": ["argumentative", "academic"],
+      "label": "中性审校腔",
+      "severity": 0.76,
+      "diagnostic_dimensions": ["average_style", "meta_discourse_density"],
+      "description": "语气太稳、太会整理、太像审校过的说明文，像在讲评或归纳，而不是作者带着自己的脾气和经历往前写。",
+      "why_it_sounds_ai": "AI 常把中文磨得过于平衡和中性，像一份已经被编辑抹平棱角的稿子，读起来顺，但没有人的脾气。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(如果非让我给它一个定位|这点我现在挺在意的|至少在.{0,12}场景里)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "如果非让我给它一个定位，我现在不太想叫它 AIGC 检测器。",
+        "这点我现在挺在意的。"
+      ],
+      "counter_examples": [
+        "我读到第三屏就开始烦了，这种烦不是抽象判断，就是当场读不下去。"
+      ],
+      "rewrite_hint": "把过于平稳的讲评语气改回具体观察，允许保留一点烦、一点犹豫和偏向。",
+      "prompt_rule": "Avoid polished editorial neutrality. Prefer concrete observation and a slightly opinionated human tone."
     }
   ]
 }

@@ -206,6 +206,69 @@
       "prompt_rule": "Do not announce that you are about to get to the point. Just get to the point."
     },
     {
+      "id": "zh.arg.reveal_the_secret",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "揭秘 / 揭秘核心",
+      "severity": 0.84,
+      "diagnostic_dimensions": [
+        "posture_before_content",
+        "meta_discourse_density"
+      ],
+      "description": "用'揭秘''深入拆解''关键指标''核心技术'这类导览词先摆姿态，像营销科普稿而不是直接进入分析。",
+      "why_it_sounds_ai": "AI 很爱先告诉读者'接下来我要给你揭示一个核心秘密'，这样看起来信息密度很高，其实是在用组织动作制造权威感。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(揭秘|深入拆解|关键指标|核心技术|核心武器)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "本文将深入拆解语义指纹技术，用通俗语言揭秘 AI 检测的底层逻辑。"
+      ],
+      "counter_examples": [
+        "我先看两个最容易量化的指标：句长起伏和局部困惑度波动。"
+      ],
+      "rewrite_hint": "删掉'揭秘'式导语，直接点出你要分析的对象、指标或现象。",
+      "prompt_rule": "Avoid reveal-style lead-ins such as '揭秘' or '核心技术'. Start from the concrete object of analysis."
+    },
+    {
+      "id": "zh.arg.tech_myth_hype",
+      "lang": "zh",
+      "genres": [
+        "argumentative",
+        "academic"
+      ],
+      "label": "技术神话腔",
+      "severity": 0.82,
+      "diagnostic_dimensions": [
+        "abstract_over_specific",
+        "closure_impulse"
+      ],
+      "description": "用'革命''军备竞赛''火眼金睛''无处遁形''思维心电图'这类说法把普通技术说明拔高成神话叙事。",
+      "why_it_sounds_ai": "这类比喻和夸张词很适合批量生成营销科普文，看起来热闹，但通常信息增量不高。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(革命|军备竞赛|火眼金睛|无处遁形|思维心电图|文本DNA)",
+          "weight": 1.0
+        }
+      ],
+      "examples": [
+        "这场文本 DNA 追踪革命正在改写 AI 检测。",
+        "让 AI 生成内容无处遁形。"
+      ],
+      "counter_examples": [
+        "这套方法能多抓到一部分模板化段落，但误报还是得人工看。"
+      ],
+      "rewrite_hint": "删掉神话化比喻，换成具体机制、约束、误差范围或适用边界。",
+      "prompt_rule": "Avoid mythic hype metaphors in technical explanation. Replace them with mechanism, scope, and limitations."
+    },
+    {
       "id": "zh.arg.no_x_no_y_only_z",
       "lang": "zh",
       "genres": [
