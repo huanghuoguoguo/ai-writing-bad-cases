@@ -1,0 +1,382 @@
+{
+  "version": "0.1.0",
+  "lang": "zh",
+  "genre": "style_reduction",
+  "records": [
+    {
+      "id": "zh.sty.uniform_sentence_length",
+      "lang": "zh",
+      "genres": ["academic", "argumentative", "narrative"],
+      "label": "句长均匀化",
+      "severity": 0.75,
+      "diagnostic_dimensions": ["rhythm", "authenticity"],
+      "description": "连续多个句子长度相近，像被同一个节奏模板控制。AI倾向于输出长度均匀的句子，避免过长或过短。",
+      "why_it_sounds_ai": "AI生成文本时倾向于保持稳定的句子长度，因为这样更符合它的训练数据中的平均模式。人类写作的句子长度变化更大。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[^。！？!?]{15,25}。[^。！？!?]{15,25}。[^。！？!?]{15,25}。",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "[^。！？!?]{20,35}。[^。！？!?]{20,35}。[^。！？!?]{20,35}。[^。！？!?]{20,35}。",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "我们需要认真思考这个问题。每个人都应该参与讨论。最终的结论需要时间验证。"
+      ],
+      "counter_examples": [
+        "我们需要认真思考这个问题。讨论？没必要，直接试就行。一周之后看结果。"
+      ],
+      "rewrite_hint": "打断其中一个句子：缩短、拉长、或拆成两句。让节奏有起伏。",
+      "prompt_rule": "Vary sentence lengths deliberately. Break uniform rhythm with noticeably shorter or longer sentences."
+    },
+    {
+      "id": "zh.sty.condensed_definition",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "label": "凝练定义式表达",
+      "severity": 0.72,
+      "diagnostic_dimensions": ["directness", "abstract_over_specific"],
+      "description": "用高度凝练的单字或双字词来承载复杂含义，如'内涵'、'演变'、'本质'，而不是展开说明。",
+      "why_it_sounds_ai": "AI倾向于使用书面化的凝练词汇，因为它能用更少的字数完成语义闭环。但人类口语表达通常会用更长、更具体的短语。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "其(内涵|本质|意义|价值|作用).{0,8}(在于|是)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(经历了|呈现出).{0,6}(深刻|显著|明显)的(演变|转变|变化)",
+          "weight": 0.75
+        },
+        {
+          "type": "regex",
+          "pattern": "将.{1,8}定义为",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "压力的内涵经历了深刻的演变。"
+      ],
+      "counter_examples": [
+        "压力这个词包含的意思，在过去几十年里变了好几回。"
+      ],
+      "rewrite_hint": "把凝练词展开成短语：内涵→包含的意义，演变→转变过程，定义→界定成。",
+      "prompt_rule": "Expand condensed abstract terms into longer, more conversational phrases."
+    },
+    {
+      "id": "zh.sty.simple_predicate_chain",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "label": "简单主谓宾链",
+      "severity": 0.68,
+      "diagnostic_dimensions": ["rhythm", "average_style"],
+      "description": "连续多个句子都是简洁的主谓宾结构，没有修饰成分的层次变化。",
+      "why_it_sounds_ai": "AI生成的句子经常是最简形式的主谓宾，缺少人类写作中常见的'边想边说'的修饰成分。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[^，。！？!?]{2,8}是[^，。！？!?]{2,12}。[^，。！？!?]{2,8}是[^，。！？!?]{2,12}。",
+          "weight": 0.7
+        },
+        {
+          "type": "regex",
+          "pattern": "[^，。！？!?]{2,8}(提供了|实现了|完成了|提出了)[^，。！？!?]{2,12}。",
+          "weight": 0.65
+        }
+      ],
+      "examples": [
+        "该方法提供了基础。该研究实现了突破。该团队完成了任务。"
+      ],
+      "counter_examples": [
+        "这个方法——至少在我们测试的那个场景里——给后面的工作打了个底。"
+      ],
+      "rewrite_hint": "在部分句子中增加修饰成分：定语扩展、状语插入、或把动词名词化。",
+      "prompt_rule": "Add modifiers selectively. Expand some sentences with '所开展的'、'具有...意义的' structures."
+    },
+    {
+      "id": "zh.sty.tight_logic_connector",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "label": "紧凑逻辑连接",
+      "severity": 0.71,
+      "diagnostic_dimensions": ["connector_driven", "authenticity"],
+      "description": "用紧凑明确的逻辑连接词（只要...就...、若...则...）来推进论证，缺少口语化的松弛感。",
+      "why_it_sounds_ai": "AI的逻辑句式通常是教科书式的标准形式，而人类口语表达会用更松散、更具解释性的长句来过渡。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "只要.{2,20}就.{2,20}",
+          "weight": 0.75
+        },
+        {
+          "type": "regex",
+          "pattern": "若.{2,16}则",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "只有.{2,20}才能",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "只要掌握了方法，就能实现目标。"
+      ],
+      "counter_examples": [
+        "要是方法能掌握住，那后面的事情相对来说会好办一些。"
+      ],
+      "rewrite_hint": "把紧凑逻辑词换成口语化表达：只要→要是...那么其将会，若→如果...就。",
+      "prompt_rule": "Loosen tight logical connectors. Use longer, more explanatory transitions."
+    },
+    {
+      "id": "zh.sty.dash_metaphor_explain",
+      "lang": "zh",
+      "genres": ["academic", "argumentative", "narrative"],
+      "label": "破折号解释隐喻",
+      "severity": 0.78,
+      "diagnostic_dimensions": ["trust", "meta_discourse_density"],
+      "description": "用破折号后面加解释来说明比喻或隐喻的含义，像在给读者做注释。",
+      "why_it_sounds_ai": "AI不信任读者能理解隐喻，所以习惯用破折号追加解释。但好的隐喻应该让读者自己体会。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "——(即|也就是|这意味着|这表明)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "[^——]{3,20}——[^。]{4,30}。",
+          "weight": 0.6
+        }
+      ],
+      "examples": [
+        "这是一把钥匙——即打开新世界的大门。"
+      ],
+      "counter_examples": [
+        "这是一把钥匙。"
+      ],
+      "rewrite_hint": "删除破折号和后面的解释。相信读者能理解隐喻。",
+      "prompt_rule": "Remove dash explanations after metaphors. Trust the reader."
+    },
+    {
+      "id": "zh.sty.explicit_transition_marker",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "aliases": ["此外然而", "过渡词堆砌"],
+      "label": "显式过渡标记",
+      "severity": 0.65,
+      "diagnostic_dimensions": ["connector_driven", "over_explicitness"],
+      "description": "段落之间用'此外''然而''与此同时'等显式过渡词来衔接，而不是靠内容本身的逻辑流动。",
+      "why_it_sounds_ai": "AI依赖过渡词来标记段落关系，但自然写作经常通过内容对比或承接来实现过渡，不需要显式声明。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "^(此外|然而|与此同时|另外|再者)",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "\\n(此外|然而|与此同时|另外|再者)",
+          "weight": 0.75
+        }
+      ],
+      "examples": [
+        "此外，我们需要考虑另一个因素。"
+      ],
+      "counter_examples": [
+        "还有一个因素容易被忽略。"
+      ],
+      "rewrite_hint": "删除过渡词，让段落开头直接进入内容。",
+      "prompt_rule": "Consider removing explicit transition markers. Let content flow naturally."
+    },
+    {
+      "id": "zh.sty.three_item_enumeration",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "aliases": ["三点式", "首先其次最后"],
+      "label": "三段式列举",
+      "severity": 0.82,
+      "diagnostic_dimensions": ["structure_symmetry", "average_style"],
+      "description": "用固定的三段式结构来列举观点：首先/其次/最后，或第一/第二/第三。AI最常用的列举模板。",
+      "why_it_sounds_ai": "AI几乎总是用三段式来组织列举，因为这是最安全的结构模板。但人类有时会用两项、四项或不编号的列举。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(首先|第一).{2,40}(其次|第二).{2,40}(最后|第三)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "(一方面|从一方面).{2,30}(另一方面|从另一方面)",
+          "weight": 0.7
+        }
+      ],
+      "examples": [
+        "首先，效率很重要。其次，质量不能忽视。最后，成本需要控制。"
+      ],
+      "counter_examples": [
+        "效率和质量的平衡关系，我之前写过一篇长的，这里就不展开了。成本方面只有一点：别超预算。"
+      ],
+      "rewrite_hint": "改成两项或四项，或者去掉编号直接列举。打破三段式的对称感。",
+      "prompt_rule": "Avoid three-part enumeration. Use two, four, or unnumbered lists instead."
+    },
+    {
+      "id": "zh.sty.meta_discourse_output",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "aliases": ["修改后", "改写后", "可以改成"],
+      "label": "元话语污染输出",
+      "severity": 0.9,
+      "diagnostic_dimensions": ["pure_output", "meta_discourse_density"],
+      "description": "输出中包含'修改后''改写后''可以改成''如果你愿意'等元话语，像在展示改写建议而不是正文。",
+      "why_it_sounds_ai": "某些AI在执行改写任务时会保留元话语标记，忘记自己应该只输出正文。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "(修改后|改写后|可以改成|如果你愿意|建议改成)",
+          "weight": 1.0
+        },
+        {
+          "type": "regex",
+          "pattern": "(以下是|上面是|这段是).{0,12}(修改|改写|润色)",
+          "weight": 0.9
+        }
+      ],
+      "examples": [
+        "修改后：效率是关键。"
+      ],
+      "counter_examples": [
+        "效率是关键。"
+      ],
+      "rewrite_hint": "删除所有元话语标记，只保留正文内容。",
+      "prompt_rule": "Remove all meta-discourse markers. Output only the body text."
+    },
+    {
+      "id": "zh.sty.empty_quantifier",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "aliases": ["一个形成", "一整方案"],
+      "label": "空洞量词",
+      "severity": 0.62,
+      "diagnostic_dimensions": ["refinement", "average_style"],
+      "description": "在抽象概念前使用泛化量词'一个'、'一整'、'相关的'，使表达显得冗余空洞。",
+      "why_it_sounds_ai": "AI在生成时会习惯性地在抽象名词前加量词，但这些量词在中文语境中往往是多余的。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "一个.{0,8}(形成|闭环|体系|机制)",
+          "weight": 0.8
+        },
+        {
+          "type": "regex",
+          "pattern": "(一整|整套).{0,8}(方案|体系|流程)",
+          "weight": 0.75
+        },
+        {
+          "type": "regex",
+          "pattern": "相关的.{0,8}(内容|信息|数据)",
+          "weight": 0.6
+        }
+      ],
+      "examples": [
+        "形成一个管理的闭环。对这一整套方案进行评估。"
+      ],
+      "counter_examples": [
+        "形成管理闭环。对这套方案评估。"
+      ],
+      "rewrite_hint": "删除空洞量词：一个→（删除），一整→（删除），相关的→（删除）。",
+      "prompt_rule": "Remove empty quantifiers before abstract concepts."
+    },
+    {
+      "id": "zh.sty.unnecessary_auxiliary",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "aliases": ["显得比较", "能够去"],
+      "label": "冗余助词",
+      "severity": 0.58,
+      "diagnostic_dimensions": ["refinement", "average_style"],
+      "description": "使用无实际意义的助词或副词，如'显得'、'能够去'、'相关地'，增加字数但不增加信息。",
+      "why_it_sounds_ai": "AI在生成时为了增加'完整性'会添加这类助词，但它们实际上是口水词。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "显得.{0,6}(比较|较为|相对)",
+          "weight": 0.7
+        },
+        {
+          "type": "regex",
+          "pattern": "能够去",
+          "weight": 0.85
+        },
+        {
+          "type": "regex",
+          "pattern": "相关地",
+          "weight": 0.8
+        }
+      ],
+      "examples": [
+        "与外部的协同层级显得比较浅。没有能够去利用自身的业务规模。"
+      ],
+      "counter_examples": [
+        "与外部的协同层级比较浅。没有利用自身的业务规模。"
+      ],
+      "rewrite_hint": "删除冗余助词：显得→（删除），能够去→能够，相关地→（删除）。",
+      "prompt_rule": "Remove unnecessary auxiliary words like '显得', '能够去'."
+    },
+    {
+      "id": "zh.sty.simple_conclusion_end",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "label": "简洁单行结尾",
+      "severity": 0.55,
+      "diagnostic_dimensions": ["rhythm", "closure_impulse"],
+      "description": "段落以过于简洁的单行结尾，像在执行'每段必须有结论'的规则，但结尾方式单调。",
+      "why_it_sounds_ai": "AI习惯用简洁的总结句来结束段落，但人类结尾的方式更多样：留悬念、转入下一话题、用具体细节收束。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[^。]{3,8}。$",
+          "weight": 0.5
+        }
+      ],
+      "examples": [
+        "这就是结论。"
+      ],
+      "counter_examples": [
+        "这就是结论，至少从我们目前的数据来看是这样。下一步要验证的是南方市场是否也有这个规律。"
+      ],
+      "rewrite_hint": "变换结尾方式：用具体细节、留悬念、或转入下一个话题，不要总是用简洁总结句。",
+      "prompt_rule": "Vary paragraph endings. Use specific details, cliffhangers, or transitions instead of uniform summary sentences."
+    },
+    {
+      "id": "zh.sty.high_info_density",
+      "lang": "zh",
+      "genres": ["academic", "argumentative"],
+      "label": "信息密度过高",
+      "severity": 0.6,
+      "diagnostic_dimensions": ["rhythm", "trust"],
+      "description": "句子信息密度过高，每个词都承载明确含义，没有'边想边说'的自然停顿和迂回。",
+      "why_it_sounds_ai": "AI生成的文本经常是高密度的信息传递，缺少人类口语中常见的冗余和停顿。",
+      "matchers": [
+        {
+          "type": "regex",
+          "pattern": "[^，。！？!?]{40,80}。",
+          "weight": 0.6
+        }
+      ],
+      "examples": [
+        "该方法通过引入自适应机制实现了对复杂环境的高效响应并显著提升了系统的整体性能指标。"
+      ],
+      "counter_examples": [
+        "这个方法加了一个自适应机制。什么意思呢？就是系统能根据环境自己调整。调完之后性能确实上去了，大概高了十几个百分点。"
+      ],
+      "rewrite_hint": "拆分长句，增加解释性短语，放慢信息传递节奏。",
+      "prompt_rule": "Break high-density sentences into shorter ones. Add explanatory phrases to slow down information delivery."
+    }
+  ]
+}
